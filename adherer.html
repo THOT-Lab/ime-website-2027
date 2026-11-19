@@ -1117,6 +1117,17 @@ body[data-morph="1"] .crow{padding:3px 2px 3px}
 body[data-morph="1"] #map .land:not(.on){fill-opacity:0}
 body[data-morph="1"] #map .land.on{stroke:#fff;stroke-width:1}
 
+/* ===== reprise 19 : calque cliquable, retour en pastille, liste sur une colonne ===== */
+body[data-morph="1"] .net-explore-layer .map-shell{z-index:45}
+html.net-exploring #reseau{pointer-events:none}
+.net-explore-layer .hud-row .back{width:48px;height:48px;justify-content:center;gap:0;font-size:0;border-radius:999px;background:rgba(13,34,62,.7);border:1px solid var(--line-dark);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#e7faff;transition:box-shadow .25s,border-color .25s,background .25s}
+.net-explore-layer .hud-row .back svg{width:18px}
+.net-explore-layer .hud-row .back:hover{background:rgba(20,52,88,.85);border-color:rgba(143,217,223,.55);box-shadow:0 0 0 1px rgba(143,217,223,.25),0 0 22px rgba(143,217,223,.35)}
+body[data-morph="1"] .countries-list{display:block}
+body[data-morph="1"] .crow{padding:4px 4px 5px;gap:3px 10px}
+body[data-morph="1"] .crow span{font-size:13.5px}
+body[data-morph="1"] .crow b{font-size:15.5px}
+
 </style>
 
 <!-- partage -->
