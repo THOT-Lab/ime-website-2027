@@ -1067,6 +1067,32 @@ html.has-snap #map,html.has-snap .map-labels{animation:mapIn .9s .25s both}
 @media(max-width:700px){.yt-section .yt-band{flex-direction:column;align-items:stretch;padding:12px 12px 18px;gap:14px}.yt-section .yt-play{width:100%;height:auto;aspect-ratio:16/9;flex:none;max-height:none}.yt-section .yt-band::after{display:none}.steps-after{margin-top:28px}}
 @media(max-width:1000px){.team-row{grid-template-columns:1fr}}
 
+/* ===== reprise 18 : réseau exploré sur l'accueil ===== */
+.net-explore-layer .map-shell{z-index:40;opacity:0;transition:opacity .55s ease}
+html.net-open .net-explore-layer .map-shell{opacity:1}
+html.net-exploring #reseau .h2,html.net-exploring #reseau .sub{transform:translateX(-45vw)!important;opacity:0!important;transition:transform .6s cubic-bezier(.55,0,.35,1),opacity .45s!important}
+html.net-exploring .net-panel .network-hint{opacity:0!important;transition:opacity .2s}
+html.net-exploring .net-panel .network-surface{pointer-events:none}
+html.net-open .net-explore-layer .map-hud>*{animation:hudIn .7s .12s cubic-bezier(.2,.8,.2,1) both}
+html.net-open .net-explore-layer .map-hud>*:nth-child(2){animation-delay:.19s}
+html.net-open .net-explore-layer .map-hud>*:nth-child(3){animation-delay:.26s}
+html.net-open .net-explore-layer .map-hud>*:nth-child(4){animation-delay:.33s}
+html.net-open .net-explore-layer .map-hud>*:nth-child(n+5){animation-delay:.4s}
+html.net-open .net-explore-layer .search{animation:searchIn .7s .25s cubic-bezier(.2,.8,.2,1) both}
+/* liste des pays condensée : tout tient sur un écran */
+body[data-morph="1"] .map-hud{bottom:18px;gap:8px}
+body[data-morph="1"] .map-sub{font-size:12.5px;line-height:1.4}
+body[data-morph="1"] .countries-list{-webkit-mask-image:none;mask-image:none}
+body[data-morph="1"] .crow{padding:3px 4px 4px;gap:2px 10px}
+body[data-morph="1"] .crow span{font-size:12.5px}
+body[data-morph="1"] .crow b{font-size:14px}
+body[data-morph="1"] .crow em{height:2px}
+/* liste en deux colonnes, contraste par les pays membres seulement (la carte d'accueil reste intacte) */
+body[data-morph="1"] .countries-list{display:grid;grid-template-columns:1fr 1fr;column-gap:16px;align-content:start}
+body[data-morph="1"] .crow{padding:3px 2px 3px}
+body[data-morph="1"] #map .land:not(.on){fill-opacity:0}
+body[data-morph="1"] #map .land.on{stroke:#fff;stroke-width:1}
+
 </style>
 <script>if(/[?&]cam=|histoire\.html/.test(location.href))document.documentElement.classList.add("will-type")</script>
 <script>document.documentElement.classList.add("arrive");addEventListener("load",()=>setTimeout(()=>document.documentElement.classList.remove("arrive"),380))</script>
@@ -1702,6 +1728,7 @@ window.IME_TEX={"earth":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBD
     // morphose satellite -> carte du réseau, pilotée par la section « Notre réseau »
     const net = document.getElementById("reseau");
     if (FORCE) earthMat.uniforms.uMorph.value = 1;
+    else if (document.body.dataset.morph === "1") earthMat.uniforms.uMorph.value += (1 - earthMat.uniforms.uMorph.value) * Math.min(1, dt * 6);
     else if (net) {
       const r = net.getBoundingClientRect();
       let m = Math.min(1, Math.max(0, (innerHeight * .25 - r.top) / (innerHeight * .55)));
@@ -1719,7 +1746,7 @@ window.IME_TEX={"earth":"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBD
     placeCamera(sw ? { ...cur, lon: cur.lon + 6 * Math.sin(ts * 2 * Math.PI / 48) * sw, lat: cur.lat + 1.2 * Math.sin(ts * 2 * Math.PI / 31) * sw } : cur);
     cloudMat.uniforms.uTime.value = now * 0.0000035;
     renderer.render(scene, camera);
-    if (FORCE) { const cs = window.IME_CAMSTR + "|" + innerWidth + "x" + innerHeight; if (cs !== lastCS) { lastCS = cs; dispatchEvent(new Event("ime:cam")); } }
+    if (FORCE || document.body.dataset.morph === "1") { const cs = window.IME_CAMSTR + "|" + innerWidth + "x" + innerHeight; if (cs !== lastCS) { lastCS = cs; dispatchEvent(new Event("ime:cam")); } }
     projectMarkers();
     cue.style.opacity = scrollY > 60 ? 0 : 1;
   }
