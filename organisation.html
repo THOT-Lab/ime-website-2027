@@ -1141,6 +1141,32 @@ body[data-morph="1"] .crow{padding:4px 4px 5px;gap:3px 10px}
 body[data-morph="1"] .crow span{font-size:13.5px}
 body[data-morph="1"] .crow b{font-size:15.5px}
 
+/* ===== reprise 20 ===== */
+/* missions : pastilles plus compactes, sans numéro, survol en lueur */
+.mission{min-height:0;padding:18px 18px 15px;background:linear-gradient(140deg,#1e6c9042,#0c2a4166);transition:border-color .25s,background .25s,box-shadow .25s}
+.mission h3{margin:0 0 8px}
+.mission .more{padding-top:12px}
+.mission:hover,.mission.rv.in:hover{transform:none;border-color:rgba(143,217,223,.5);background:linear-gradient(140deg,#1e6c9066,#0c2a4185);box-shadow:0 0 0 1px rgba(143,217,223,.2),0 0 28px rgba(143,217,223,.22)}
+/* fiche mission : même cadre que les fiches pays du réseau */
+.drawer[data-tone=dark]{background:rgba(9,28,50,.88);color:#e8f4f8;border:1px solid rgba(143,217,223,.22);backdrop-filter:blur(20px) saturate(1.2);-webkit-backdrop-filter:blur(20px) saturate(1.2);width:min(560px,calc(100vw - 24px))}
+@media (min-width:901px){.drawer[data-tone=dark]{top:calc(var(--hdr,106px) + 12px)}}
+.drawer[data-tone=dark] .d-head{border-color:rgba(255,255,255,.1);padding:20px 26px 14px}
+.drawer[data-tone=dark] .d-head .kicker{color:var(--lagoon-soft,#8fd9df)}
+.drawer[data-tone=dark] .x{border-color:rgba(255,255,255,.2);color:#e8f4f8}
+.drawer[data-tone=dark] .x:hover{background:#e6fbff;color:#0a3a55}
+.drawer[data-tone=dark] .d-body{padding:22px 26px 34px}
+.drawer[data-tone=dark] .d-body h2{color:#fff;font-size:40px;line-height:1;margin:0 0 10px}
+.drawer[data-tone=dark] .m-title{margin:0 0 14px;color:var(--lagoon-soft,#8fd9df);font-weight:700;font-size:15px;line-height:1.45}
+.drawer[data-tone=dark] .d-body .lead{color:#b9cfdb;font-size:15.5px;line-height:1.65;margin:0}
+.drawer[data-tone=dark] h4{color:#8ea6b6!important;margin-top:26px!important}
+.drawer[data-tone=dark] .act{margin-top:12px;gap:10px}
+.drawer[data-tone=dark] .act div{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.1);border-radius:18px;padding:14px 18px;transition:background .25s,border-color .25s,box-shadow .25s}
+.drawer[data-tone=dark] .act div:hover{background:rgba(143,217,223,.08);border-color:rgba(143,217,223,.35);box-shadow:0 0 22px rgba(143,217,223,.15)}
+.drawer[data-tone=dark] .act b{color:#fff;font-size:15px}
+.drawer[data-tone=dark] .act span{color:#b9cfdb;font-size:13.5px}
+.drawer[data-tone=dark] .btn-ink{background:#e6fbff;color:#0a3a55}
+.drawer[data-tone=dark] .btn-ghost{border-color:rgba(255,255,255,.2);color:#e8f4f8}
+
 </style>
 <script>document.documentElement.classList.add("arrive");addEventListener("load",()=>setTimeout(()=>document.documentElement.classList.remove("arrive"),60))</script>
 
@@ -1533,7 +1559,7 @@ window.IME_LOGO_OPTIONS=[{"n": 1, "src": "data:image/svg+xml;base64,PHN2ZyB4bWxu
   window.IME_DRAWER = {
     open(kicker, html, onReady) {
       lastFocus = document.activeElement; drawer.inert=false;
-      drawer.querySelector(".kicker").textContent = kicker;
+      drawer.querySelector(".kicker").textContent = kicker; drawer.dataset.tone = kicker === "Nos missions" ? "dark" : "";
       const body = drawer.querySelector(".d-body"); body.innerHTML = html; body.scrollTop = 0;
       scrim.classList.add("open"); drawer.classList.add("open");
       document.documentElement.style.overflow = "hidden";
